@@ -17,7 +17,6 @@ app.use(express.json({ limit: "30mb" }));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use('/', root)
 app.use('/orders', orders );
-amqpSender();
 
 app.listen(PORT, () => console.log("SERVER IS UP AND RUNNING ON PORT ", PORT))
   .on("error", (err) => console.log('Error', err));
