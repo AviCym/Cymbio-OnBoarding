@@ -6,23 +6,23 @@ export interface OrderSchema {
     retailer_order_id: '123',
     order_lines: [
    {
-    id: Number,
+    id: number,
     notes: [],
-    order_id: Number,
-    quantity: Number,
-    retailer_sku: String,
-    billed_amount: Number,
-    original_quantity: Number,
-    unit_price: Number,
-    tax_billed_amount: Number,
-    variant_id: Number,
+    order_id: number,
+    quantity: number,
+    retailer_sku: string,
+    billed_amount: number,
+    original_quantity: number,
+    unit_price: number,
+    tax_billed_amount: number,
+    variant_id: number,
    }
    ],
-    shipping_paid: Number,
+    shipping_paid: number,
     shipping_method_code: ShippingCompanies,
-    retailer_id: Number,
-    expired: Boolean,
-    created_at: String,
+    retailer_id: number,
+    expired: boolean,
+    created_at: string,
 }
 
 export enum ShippingCompanies {

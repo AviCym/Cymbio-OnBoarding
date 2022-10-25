@@ -1,0 +1,1 @@
+{"version":3,"file":"orders.js","sourceRoot":"","sources":["orders.ts"],"names":[],"mappings":";;;;;AAAA,kDAA4B;AAC5B,wDAAiD;AAEjD,cAAM,CAAC,IAAI,CAAC,OAAO,EAAE,iBAAK,CAAC,CAAC;AAE5B,kBAAe,cAAM,CAAC","sourcesContent":["import router from \"./root\";\nimport { order } from \"../controllers/postOrder\";\n\nrouter.post('/post', order);\n\nexport default router;"]}
