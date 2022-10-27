@@ -1,0 +1,1 @@
+{"version":3,"file":"healthCheck.js","sourceRoot":"","sources":["../../controllers/healthCheck.ts"],"names":[],"mappings":";;AAAA,MAAM,WAAW,GAAG,CAAC,GAAO,EAAE,GAAO,EAAE,IAAQ,EAAE,EAAE,CAAC,GAAG,CAAC,UAAU,CAAC,GAAG,CAAC,CAAC;AACxE,kBAAe,WAAW,CAAC","sourcesContent":["const healthCheck = (req:any, res:any, next:any) => res.sendStatus(200);\nexport default healthCheck;"]}

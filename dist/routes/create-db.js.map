@@ -1,0 +1,1 @@
+{"version":3,"file":"create-db.js","sourceRoot":"","sources":["../../routes/create-db.ts"],"names":[],"mappings":";;;;;AAAA,6CAA0C;AAC1C,kDAA4B;AAE5B,cAAM,CAAC,GAAG,CAAC,YAAY,EAAE,mBAAQ,CAAC,CAAA;AAElC,kBAAe,cAAM,CAAC","sourcesContent":["import { createDB } from \"../db/setup-db\";\nimport router from \"./root\";\n\nrouter.get('/create-db', createDB)\n\nexport default router;"]}

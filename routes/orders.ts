@@ -1,6 +1,9 @@
 import router from "./root";
-import { order } from "../controllers/postOrder";
+import { getOrderById, getOrderFromQueue, pushOrderToQueue } from "../controllers/orders";
 
-router.post('/post', order);
+
+router.get('/orders/:id',getOrderById);
+router.get('/orders/queue/receive',getOrderFromQueue);
+router.post('/orders/queue/send', pushOrderToQueue);
 
 export default router;
