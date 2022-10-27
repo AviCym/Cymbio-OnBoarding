@@ -2,24 +2,23 @@ import Orders from "../db/models/orders";
 import { Request, Response } from "express";
 import Queue from "../middlewares/rabbitmq/queue";
 
-const ordersSender = new Queue("orders");
-const orderReceiver = new Queue("orders");
+const ordersQueue = new Queue("orders");
 
 export const pushOrderToQueue = async (req:Request, res:Response) => {
     try {
-        const receivedOrder:string = JSON.stringify(req.body);
-        ordersSender.sender(receivedOrder);
-        res.status(201).json(receivedOrder);
-        console.log("order",req.body);
+        const receivedOrder:string = req.body;
+        ordersQueue.sender(receivedOrder);
+        res.status(201).json({receivedOrder: receivedOrder});
     }
     catch (error:any) {
+        console.log(error);
         res.status(409).json({ message: error.message });
     }
 }
 export const getOrderFromQueue = async (req:Request, res:Response) => {
    console.log('trying to get order from queue')
     try {
-        const receivedOrder = orderReceiver.receiver();
+        const receivedOrder = ordersQueue.receiver();
         res.status(201).json(receivedOrder);
         console.log(receivedOrder)
     }

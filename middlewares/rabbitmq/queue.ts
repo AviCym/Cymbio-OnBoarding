@@ -1,5 +1,6 @@
 import amqp, { AmqpConnectionManager, ChannelWrapper } from 'amqp-connection-manager';
 import { ConfirmChannel } from 'amqplib';
+import { error } from 'console';
 
 export default class Queue {
     queueName: string;
@@ -17,22 +18,26 @@ export default class Queue {
             },
           });
     }
-
-    sender (message: string) {
-        this.channelWrapper
-        .sendToQueue(this.queueName, message)
-        .then(function () {
-        return console.log('Message was sent!  Hooray!');
-        })
-        .catch(function (err) {
-        return console.log('Message was rejected...  Boo!');
-        });
+    async checkQueue() {
+       return this.channelWrapper.checkQueue(this.queueName)
     }
-    receiver () {
+    async assertQueue() {
+        this.channelWrapper.assertQueue(this.queueName);
+    }
+    async sender (message: string) {
+            try {
+                this.assertQueue();
+                return await this.channelWrapper.sendToQueue(this.queueName, message);
+            }
+            catch (error:any) {
+                throw Error(error);
+            }
+    }
+    receiver (): void {
         this.channelWrapper
-        .get(this.queueName,)
-        .then(function () {
-        return console.log('Message was sent!  Hooray!');
+        .get(this.queueName,{noAck:true})
+        .then(function (msg) {
+        return console.log('Message was sent!  Hooray!', msg);
         })
         .catch(function (err) {
         return console.log('Message was rejected...  Boo!');

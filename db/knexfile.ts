@@ -1,5 +1,6 @@
-// Update with your config settings.
-const {knexSnakeCaseMappers} = require('objection');
+
+// const {knexSnakeCaseMappers} = require('objection');
+import knexSnakeCaseMappers from 'objection'
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
