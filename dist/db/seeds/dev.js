@@ -98,6 +98,12 @@ const seed = async function (knex) {
             variant_id: 123,
         },
     ]);
+    await knex('notes').insert([
+        {
+            note_content: 'I Am a test note',
+            order_id: 1,
+        }
+    ]);
 };
 exports.seed = seed;
 //# sourceMappingURL=dev.js.map

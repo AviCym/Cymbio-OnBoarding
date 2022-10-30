@@ -34,7 +34,7 @@ exports.getOrderFromQueue = getOrderFromQueue;
 const getOrderById = async (req, res) => {
     try {
         const { id } = req.params;
-        const order = await orders_1.default.query().findById(id).withGraphFetched('order_lines');
+        const order = await orders_1.default.query().findById(id).withGraphFetched(['notes', 'order_lines']);
         res.json(order);
     }
     catch (err) {
@@ -45,8 +45,9 @@ const getOrderById = async (req, res) => {
 exports.getOrderById = getOrderById;
 const getAllOrders = async (req, res) => {
     try {
-        const orders = await orders_1.default.query().then(orders => res.json(orders));
+        const orders = await orders_1.default.query().withGraphFetched('order_lines');
         console.log(orders);
+        res.json(orders);
     }
     catch (err) {
         throw err;

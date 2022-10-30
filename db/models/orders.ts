@@ -1,4 +1,5 @@
 import { Model } from "objection";
+import Notes from "./notes";
 import OrderLines from "./order-lines";
 
 export default class Orders extends Model {
@@ -15,6 +16,7 @@ export default class Orders extends Model {
                     to: "order_lines.order_id"
                 },
             },
-        };
+            
+        }
     }
 }

@@ -4,14 +4,14 @@ import bodyParser from 'body-parser';
 import orders from './routes/orders';
 import root from './routes/root';
 import setupDB from './db/setup-db';
-import Queue1 from './middlewares/rabbitmq/queue';
+import Queue from './middlewares/rabbitmq/queue.rabbitmq';
 
 dotenv.config();
 const PORT = +process.env.PORT! || 5050
 
 setupDB();
-// const a = new Queue1();
-// a.sender()
+const ordersQueue= new Queue('orders');
+ordersQueue.consumer()
 export const app = express();
 
 app.use(express.json({ limit: "30mb" }));

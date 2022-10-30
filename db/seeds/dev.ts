@@ -98,6 +98,12 @@ export const seed =  async function(knex:Knex) {
     variant_id: 123,
    },
   ])
+  await knex('notes').insert([
+    {
+      note_content: 'I Am a test note',
+      order_lines_id: 1,
+     }
+    ]);
 };
 
 

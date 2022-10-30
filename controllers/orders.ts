@@ -1,6 +1,6 @@
 import Orders from "../db/models/orders";
 import { Request, Response } from "express";
-import Queue from "../middlewares/rabbitmq/queue";
+import Queue from "../middlewares/rabbitmq/queue.rabbitmq";
 
 const ordersQueue = new Queue("orders");
 
@@ -29,20 +29,20 @@ export const getOrderFromQueue = async (req:Request, res:Response) => {
 
 export const getOrderById = async (req:Request, res:Response) => {
     try{
-      const {id} = req.params;
-      const order = await Orders.query().findById(id).withGraphFetched('order_lines');
-      res.json(order)
+        const {id} = req.params;
+        const order = await Orders.query().findById(id).withGraphFetched('order_lines')
+        res.status(201).json(order)
     } catch(err) {
-      console.log(err)
-    res.status(500).json(err)
+        console.log(err)
+        res.status(500).json(err)
     }
   }
   export const getAllOrders = async (req:Request, res:Response) => {
     try {
-        const orders = await Orders.query().withGraphFetched('order_lines');
-        console.log(orders);
-        res.json(orders);
+        const orders = await Orders.query().withGraphFetched('[order_lines, order_lines.notes]');
+        res.status(201).json(orders);
     } catch(err) {
-        throw err;
+        console.log(err)
+        res.status(500).json(err)
     }
   }

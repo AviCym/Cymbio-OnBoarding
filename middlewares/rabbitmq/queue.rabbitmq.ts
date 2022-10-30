@@ -1,6 +1,8 @@
 import amqp, { AmqpConnectionManager, ChannelWrapper } from 'amqp-connection-manager';
 import { ConfirmChannel } from 'amqplib';
 import { error } from 'console';
+import OrderLines from '../../db/models/order-lines';
+import Orders from '../../db/models/orders';
 
 export default class Queue {
     queueName: string;
@@ -26,7 +28,6 @@ export default class Queue {
     }
     async producer (message: string) {
             try {
-                await this.assertQueue();
                 return await this.channelWrapper.sendToQueue(this.queueName, message);
             }
             catch (error:any) {
@@ -34,10 +35,18 @@ export default class Queue {
             }
     }
     async consumer () {
-        await this.channelWrapper.consume(this.queueName, (message)=>{
-            console.log("Consumer has received the following message: " + message)
-            return message;
-        });
+        await this.channelWrapper.consume(this.queueName,async (message) => {
+            try {
+                const messageInJSON = await JSON.parse(message.content.toString());
+                await Orders.query().insertGraph(messageInJSON)
+                await OrderLines.query().insertGraph(messageInJSON.order_lines)
+                console.log("Consumer has received the following message: " , JSON.parse(message.content.toString()));
+                return message;
+            }
+            catch (error:any) {
+                            throw Error(error);
+                        }
+        }, {noAck: true});
     }
     async consumeOne () {
         await this.channelWrapper

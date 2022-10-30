@@ -31,10 +31,10 @@ exports.up = function(knex) {
     table.increments();
     table.string('note_content');
     table
-        .integer('order_line_id')
+        .integer('order_lines_id')
         .unsigned()
         .notNullable()
-        .references('id')
+        .references('order_id')
         .inTable('order_lines');
     table.timestamps(true,true);
   })
