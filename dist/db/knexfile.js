@@ -1,7 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-// Update with your config settings.
-const { knexSnakeCaseMappers } = require('objection');
+// const {knexSnakeCaseMappers} = require('objection');
+const objection_1 = __importDefault(require("objection"));
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
@@ -23,7 +26,7 @@ const knexFile = {
         seeds: {
             directory: './seeds'
         },
-        ...knexSnakeCaseMappers,
+        ...objection_1.default,
     },
 };
 exports.default = knexFile;

@@ -7,7 +7,7 @@ const ordersQueue = new Queue("orders");
 export const pushOrderToQueue = async (req:Request, res:Response) => {
     try {
         const receivedOrder:string = req.body;
-        ordersQueue.sender(receivedOrder);
+        ordersQueue.producer(receivedOrder);
         res.status(201).json({receivedOrder: receivedOrder});
     }
     catch (error:any) {
@@ -18,7 +18,7 @@ export const pushOrderToQueue = async (req:Request, res:Response) => {
 export const getOrderFromQueue = async (req:Request, res:Response) => {
    console.log('trying to get order from queue')
     try {
-        const receivedOrder = ordersQueue.receiver();
+        const receivedOrder = ordersQueue.consumeOne();
         res.status(201).json(receivedOrder);
         console.log(receivedOrder)
     }
@@ -35,5 +35,14 @@ export const getOrderById = async (req:Request, res:Response) => {
     } catch(err) {
       console.log(err)
     res.status(500).json(err)
+    }
+  }
+  export const getAllOrders = async (req:Request, res:Response) => {
+    try {
+        const orders = await Orders.query().withGraphFetched('order_lines');
+        console.log(orders);
+        res.json(orders);
+    } catch(err) {
+        throw err;
     }
   }

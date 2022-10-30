@@ -13,6 +13,8 @@ const setup_db_1 = __importDefault(require("./db/setup-db"));
 dotenv_1.default.config();
 const PORT = +process.env.PORT || 5050;
 (0, setup_db_1.default)();
+// const a = new Queue1();
+// a.sender()
 exports.app = (0, express_1.default)();
 exports.app.use(express_1.default.json({ limit: "30mb" }));
 exports.app.use(body_parser_1.default.urlencoded({ extended: false }));
