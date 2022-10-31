@@ -10,11 +10,12 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const orders_1 = __importDefault(require("./routes/orders"));
 const root_1 = __importDefault(require("./routes/root"));
 const setup_db_1 = __importDefault(require("./db/setup-db"));
+const queue_rabbitmq_1 = __importDefault(require("./middlewares/rabbitmq/queue.rabbitmq"));
 dotenv_1.default.config();
 const PORT = +process.env.PORT || 5050;
 (0, setup_db_1.default)();
-// const a = new Queue1();
-// a.sender()
+const ordersQueue = new queue_rabbitmq_1.default('orders');
+ordersQueue.consumer();
 exports.app = (0, express_1.default)();
 exports.app.use(express_1.default.json({ limit: "30mb" }));
 exports.app.use(body_parser_1.default.urlencoded({ extended: false }));

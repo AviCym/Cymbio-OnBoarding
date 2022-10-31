@@ -3,6 +3,7 @@ import {knex} from "knex";
 import knexfile from './knexfile';
 import { Model } from "objection";
 
+
 const DB = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -19,11 +20,11 @@ DB.connect((err:any) => {
 
 
 export const createDB = async (req:any, res:any) => {
-    const sql = 'CREATE DATABASE CymbioTempENV';
-    DB.query(sql, (err:any, result:any) => {
+    const sqlCreateDbCommand = `CREATE DATABASE CymbioTempENV`;
+    DB.query(sqlCreateDbCommand, (err:any, result:any) => {
         if(err) {
             throw err
-        };
+        }
         console.log(result);
         res.send('DataBase has been created');
     })
@@ -32,7 +33,6 @@ export const createDB = async (req:any, res:any) => {
 const setupDB = ():void => {
     const db = knex(knexfile.development);
     Model.knex(db);
-    console.log("trying setupDB");
 }
 
 export default setupDB;

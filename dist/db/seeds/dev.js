@@ -101,7 +101,7 @@ const seed = async function (knex) {
     await knex('notes').insert([
         {
             note_content: 'I Am a test note',
-            order_id: 1,
+            order_lines_id: 1,
         }
     ]);
 };

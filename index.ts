@@ -10,8 +10,10 @@ dotenv.config();
 const PORT = +process.env.PORT! || 5050
 
 setupDB();
+
 const ordersQueue= new Queue('orders');
-ordersQueue.consumer()
+ordersQueue.consumer();
+
 export const app = express();
 
 app.use(express.json({ limit: "30mb" }));

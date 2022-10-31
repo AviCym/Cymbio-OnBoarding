@@ -17,8 +17,8 @@ const knexFile = {
             password: 'pass'
         },
         pool: {
-            min: 2,
-            max: 10
+            min: 0,
+            max: 1000
         },
         migrations: {
             tableName: 'knex_migrations'

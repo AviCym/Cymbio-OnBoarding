@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllOrders = exports.getOrderById = exports.getOrderFromQueue = exports.pushOrderToQueue = void 0;
 const orders_1 = __importDefault(require("../db/models/orders"));
-const queue_1 = __importDefault(require("../middlewares/rabbitmq/queue"));
-const ordersQueue = new queue_1.default("orders");
+const queue_rabbitmq_1 = __importDefault(require("../middlewares/rabbitmq/queue.rabbitmq"));
+const ordersQueue = new queue_rabbitmq_1.default("orders");
 const pushOrderToQueue = async (req, res) => {
     try {
         const receivedOrder = req.body;
@@ -34,8 +34,8 @@ exports.getOrderFromQueue = getOrderFromQueue;
 const getOrderById = async (req, res) => {
     try {
         const { id } = req.params;
-        const order = await orders_1.default.query().findById(id).withGraphFetched(['notes', 'order_lines']);
-        res.json(order);
+        const order = await orders_1.default.query().findById(id).withGraphFetched('order_lines');
+        res.status(201).json(order);
     }
     catch (err) {
         console.log(err);
@@ -45,12 +45,12 @@ const getOrderById = async (req, res) => {
 exports.getOrderById = getOrderById;
 const getAllOrders = async (req, res) => {
     try {
-        const orders = await orders_1.default.query().withGraphFetched('order_lines');
-        console.log(orders);
-        res.json(orders);
+        const orders = await orders_1.default.query().withGraphFetched('[order_lines, order_lines.notes]');
+        res.status(201).json(orders);
     }
     catch (err) {
-        throw err;
+        console.log(err);
+        res.status(500).json(err);
     }
 };
 exports.getAllOrders = getAllOrders;
